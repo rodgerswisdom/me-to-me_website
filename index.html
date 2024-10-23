@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me to Me - Safe Days Calculator</title>
+    <style>
+        :root {
+            --bg-color-light: #f4f4f9;
+            --text-color-light: #2e2e2e;
+            --bg-color-dark: #2e2e2e;
+            --text-color-dark: #f4f4f9;
+            --accent-color: #22c1c3;
+            --safe-day-color: #74c69d;
+            --unsafe-day-color: #e63946;
+            --nav-bg-light: #22c1c3;
+            --nav-bg-dark: #1a9da3;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--nav-bg-light);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        .nav-bar .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .nav-bar .theme-toggle {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .content-section {
+            margin-top: 60px;
+        }
+
+        .calculator, .education {
+            margin-bottom: 40px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #1a9da3;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .calendar div {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .safe-day {
+            background-color: var(--safe-day-color);
+            color: white;
+        }
+
+        .unsafe-day {
+            background-color: var(--unsafe-day-color);
+            color: white;
+        }
+
+        .dark-mode {
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        .dark-mode .container {
+            background-color: #3e3e3e;
+        }
+
+        .dark-mode .nav-bar {
+            background-color: var(--nav-bg-dark);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--nav-bg-light);
+            color: white;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <div class="logo">Me to Me</div>
+        <div>
+            <a href="#calculator">Safe Days Calculator</a>
+            <a href="#education">Reproductive Health</a>
+        </div>
+        <div class="theme-toggle" onclick="toggleTheme()">🌞</div>
+    </div>
+
+    <div class="container content-section">
+        <!-- Safe Days Calculator Section -->
+        <section id="calculator" class="calculator">
+            <h1>Safe Days Calculator</h1>
+
+            <label for="shortest">Shortest Cycle (days):</label>
+            <select id="shortest" required>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+            </select>
+
+            <label for="longest">Longest Cycle (days):</label>
+            <select id="longest" required>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+            </select>
+
+            <label for="lastPeriod">First Day of Last Period:</label>
+            <input type="date" id="lastPeriod" required>
+
+            <button onclick="calculateSafeDays()">Calculate Safe Days</button>
+
+            <div class="result" id="result"></div>
+
+            <div class="calendar" id="calendar"></div>
+        </section>
+
+        <!-- Reproductive Health Education Section -->
+        <section id="education" class="education">
+            <h1>Reproductive Health Information</h1>
+            <article>
+                <h2>Understanding Menstrual Health</h2>
+                <p>Your menstrual health plays a critical role in your overall well-being. It is important to understand how the menstrual cycle works, what safe days are, and how to track them. By being aware of the changes in your body, you can make informed decisions about your reproductive health.</p>
+            </article>
+
+            <article>
+                <h2>What Are Safe Days?</h2>
+                <p>Safe days are the days in your menstrual cycle when the chance of getting pregnant is the lowest. These are typically outside of the ovulation window. Tracking your safe days using tools like the "Me to Me" calculator can help in family planning or avoiding unwanted pregnancies.</p>
+            </article>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2024 Me to Me. All rights reserved.</p>
+        <p>
+            <a href="#calculator">Calculator</a> |
+            <a href="#education">Reproductive Health</a>
+        </p>
+    </footer>
+
+    <script>
+        function calculateSafeDays() {
+            const shortest = parseInt(document.getElementById('shortest').value);
+            const longest = parseInt(document.getElementById('longest').value);
+            const lastPeriodDate = new Date(document.getElementById('lastPeriod').value);
+
+            if (isNaN(shortest) || isNaN(longest) || !lastPeriodDate) {
+                alert("Please fill all the fields correctly!");
+                return;
+            }
+
+            const ovulationDay = shortest - 14;
+            const unsafeStart = new Date(lastPeriodDate);
+            unsafeStart.setDate(lastPeriodDate.getDate() + ovulationDay - 5);
+            const unsafeEnd = new Date(lastPeriodDate);
+            unsafeEnd.setDate(lastPeriodDate.getDate() + ovulationDay + 4);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>Unsafe days are from <b>${unsafeStart.toDateString()}</b> to <b>${unsafeEnd.toDateString()}</b>.</p>
+            `;
+
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            for (let i = 1; i <= 30; i++) {
+                const day = new Date(lastPeriodDate);
+                day.setDate(lastPeriodDate.getDate() + i);
+                const div = document.createElement('div');
+                div.innerHTML = `${day.getDate()}/${day.getMonth() + 1}`;
+                if (day >= unsafeStart && day <= unsafeEnd) {
+                    div.classList.add('unsafe-day');
+                } else {
+                    div.classList.add('safe-day');
+                }
+                calendar.appendChild(div);
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
