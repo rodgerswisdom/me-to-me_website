@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Me to Me - Safe Days Calculator</title>
+    <script src="https://accounts.google.com/gsi/client" async></script>
     <style>
         :root {
             --bg-color-light: #f4f4f9;
@@ -152,10 +153,21 @@
         footer a:hover {
             text-decoration: underline;
         }
+        .banner{
+            background: pink;
+            height: 100px;
+            margin-top: 50px;
+
+        }
+        .banner p{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-
+    <div class="banner">
+        <p> New look and features coming soon. Stay tuned! <img src="https://cdn2.iconfinder.com/data/icons/sexual-positions/205/sex-001-64.png" /></p>
+    </div>
     <!-- Navigation Bar -->
     <div class="nav-bar">
         <div class="logo">Me to Me</div>
@@ -220,6 +232,28 @@
 
             <div class="calendar" id="calendar"></div>
         </section>
+	<div
+	  id="g_id_onload"
+ 	 data-client_id="<client ID>"
+ 	 data-context="signin"
+ 	 data-ux_mode="popup"
+ 	 data-callback="handleSignInWithGoogle"
+ 	 data-nonce=""
+ 	 data-auto_select="true"
+ 	 data-itp_support="true"
+ 	 data-use_fedcm_for_prompt="true"
+	></div>
+
+<div
+  class="g_id_signin"
+  data-type="standard"
+  data-shape="pill"
+  data-theme="outline"
+  data-text="signin_with"
+  data-size="large"
+  data-logo_alignment="left"
+></div>
+
 
         <!-- Reproductive Health Education Section -->
         <section id="education" class="education">
@@ -246,6 +280,13 @@
     </footer>
 
     <script>
+	async function handleSignInWithGoogle(response) {
+	 const { data, error } = await supabase.auth.signInWithIdToken({
+	    provider: 'google',
+	    token: response.credential,
+	  })
+	}
+
         function calculateSafeDays() {
             const shortest = parseInt(document.getElementById('shortest').value);
             const longest = parseInt(document.getElementById('longest').value);
